@@ -1,12 +1,14 @@
 package com.github.roundrop.logging.logback;
 
-import java.util.regex.Pattern;
-
+/**
+ * replace string multi line to one line.
+ */
 public class Oneliner {
-    private static Pattern sp = Pattern.compile("\r\n|[\n\r]");
-    private static Pattern tb = Pattern.compile("\t", Pattern.LITERAL);
 
+    /**
+     * back port.
+     */
     public static String toOnline(String src) {
-        return tb.matcher(sp.matcher(src).replaceAll("\\\\n")).replaceAll("    ");
+        return TabPattern.replaceAll(NewLinePattern.replaceAll(src));
     }
 }

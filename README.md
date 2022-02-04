@@ -13,7 +13,7 @@ This converter replaces the line feed characters (\n,\r,\r\n) with \\\n so that 
 
 ```
 dependencies {
-  compile group: 'com.github.roundrop', name: 'logback-oneline-converter', version: '1.1.+'
+  compile group: 'com.github.roundrop', name: 'logback-oneline-converter', version: '2.0.+'
 }
 ```
 
@@ -23,7 +23,7 @@ dependencies {
 <dependency>
     <groupId>com.github.roundrop</groupId>
     <artifactId>logback-oneline-converter</artifactId>
-    <version>[1.1,)</version>
+    <version>[2.0,)</version>
 </dependency>
 ```
 

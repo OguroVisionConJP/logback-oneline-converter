@@ -8,9 +8,9 @@ import ch.qos.logback.classic.spi.LoggingEvent;
 import ch.qos.logback.classic.spi.ThrowableProxy;
 import ch.qos.logback.core.ConsoleAppender;
 import ch.qos.logback.core.CoreConstants;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
@@ -25,12 +25,12 @@ public class OnelineExtendedThrowableProxyConverterTest {
 
     private final LoggingEvent event = new LoggingEvent();
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         converter.start();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         converter.stop();
     }

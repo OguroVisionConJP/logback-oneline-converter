@@ -1,24 +1,34 @@
-package com.github.roundrop.logging.logback;
+package com.github.roundrop.logging.logback.customizable;
 
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
+import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.LoggingEvent;
+import ch.qos.logback.classic.spi.TurboFilterList;
+import ch.qos.logback.core.Appender;
 import ch.qos.logback.core.ConsoleAppender;
 import ch.qos.logback.core.CoreConstants;
+import ch.qos.logback.core.joran.spi.JoranException;
+import ch.qos.logback.core.read.ListAppender;
+import ch.qos.logback.core.spi.AppenderAttachable;
+
 import org.junit.jupiter.api.Test;
 import org.slf4j.LoggerFactory;
 
+import static java.util.Objects.requireNonNull;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class OnelineMessageConverterTest {
+public class MessageConverterTest {
 
-    private final OnelineMessageConverter converter = new OnelineMessageConverter();
+    private final MessageConverter converter = new MessageConverter();
 
     private final LoggingEvent event = new LoggingEvent();
 
@@ -61,7 +71,7 @@ public class OnelineMessageConverterTest {
             ruleRegistry = new HashMap<String, String>();
             context.putObject(CoreConstants.PATTERN_RULE_REGISTRY, ruleRegistry);
         }
-        ruleRegistry.put("msg1L", OnelineMessageConverter.class.getCanonicalName());
+        ruleRegistry.put("msg1L", MessageConverter.class.getCanonicalName());
 
         PatternLayoutEncoder encoder = new PatternLayoutEncoder();
         encoder.setContext(context);
@@ -88,4 +98,31 @@ public class OnelineMessageConverterTest {
                         "    xxx_id");
     }
 
+    @Test
+    public void testSimple() throws JoranException {
+        LoggerContext loggerFactory = createLoggerFactory("/logback-newline-test.xml");
+
+        // Write something that never gets logged explicitly...
+        Logger debugLogger = loggerFactory.getLogger("com.example.Debug");
+        debugLogger.debug("debug one");
+        debugLogger.debug("debug two");
+        debugLogger.debug("debug three");
+        debugLogger.debug("debug four");
+
+        Logger logger = loggerFactory.getLogger("com.example.Test");
+        logger.error("Write out error message to console");
+
+        ListAppender<ILoggingEvent> listAppender = (ListAppender<ILoggingEvent>) requireNonNull(
+                loggerFactory.getLoggerList().get(0).getAppender("LIST"));
+        assertThat(listAppender.list.size(), is(5));
+    }
+
+    LoggerContext createLoggerFactory(String resourceName) throws JoranException {
+        LoggerContext context = new LoggerContext();
+        URL resource = getClass().getResource(resourceName);
+        JoranConfigurator configurator = new JoranConfigurator();
+        configurator.setContext(context);
+        configurator.doConfigure(resource);
+        return context;
+    }
 }
