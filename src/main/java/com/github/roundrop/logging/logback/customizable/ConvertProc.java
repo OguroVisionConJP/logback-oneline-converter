@@ -30,17 +30,17 @@ public class ConvertProc {
     private boolean replaceNewLine = true;
     private boolean replaceHardTab = true;
 
-    private String newLineReplaced = " \\n ";
+    private String newLineReplaced = "\\\\n";
     private String hardTabReplaced = "    ";
 
     public ConvertProc(Context context) {
-        String hardTabReplaced = context.getProperty(NEW_LINE_REPLACED);
+        String hardTabReplaced = context.getProperty(HARD_TAB_REPLACED);
         this.hardTabReplaced = hardTabReplaced != null ? hardTabReplaced : this.hardTabReplaced;
         String newLineReplaced = context.getProperty(NEW_LINE_REPLACED);
         this.newLineReplaced = newLineReplaced != null ? newLineReplaced : this.newLineReplaced;
-        String replaceHardTab = context.getProperty(NEW_LINE_REPLACED);
+        String replaceHardTab = context.getProperty(HARD_TAB_REPLACE_EXEC);
         this.replaceHardTab = replaceHardTab != null ? Boolean.parseBoolean(replaceHardTab) : this.replaceHardTab;
-        String replaceNewLine = context.getProperty(NEW_LINE_REPLACED);
+        String replaceNewLine = context.getProperty(NEW_LINE_REPLACE_EXEC);
         this.replaceNewLine = replaceNewLine != null ? Boolean.parseBoolean(replaceNewLine) : this.replaceNewLine;
     }
 
@@ -63,16 +63,16 @@ public class ConvertProc {
     /**
      * string convert with context properties.
      * 
-     * @param string
+     * @param src
      * @return replacedString
      */
-    String exec(final String string) {
-        String result = string.concat("");
+    String exec(final String src) {
+        String result = src.concat("");
         if (isReplaceHardTab()) {
-            result = TabPattern.replaceAll(result, getHardTabReplaced());
+            result = TabPattern.replaceAll(result, hardTabReplaced);
         }
         if (isReplaceNewLine()) {
-            result = NewLinePattern.replaceAll(result, getNewLineReplaced());
+            result = NewLinePattern.replaceAll(result, newLineReplaced);
         }
         return result;
     }

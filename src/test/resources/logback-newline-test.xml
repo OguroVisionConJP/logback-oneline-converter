@@ -1,18 +1,11 @@
 <configuration>
+    <property scope="context" name="newLineReplaced" value=" ~~ " />
+    <property scope="context" name="hardTabReplaceExec" value="false" />
 
     <appender name="LIST" class="ch.qos.logback.core.read.ListAppender">
+        <conversionRule conversionWord="msg1" converterClass="com.github.roundrop.logging.logback.customizable.MessageConverter" />
         <encoder>
-            <pattern>%msg%n</pattern>
-        </encoder>
-    </appender>
-
-    <conversionRule conversionWord="msg1" converterClass="com.github.roundrop.logging.logback.customizable.MessageConverter">
-        <property name="newLineReplaced" value=" ~~ " />
-        <property name="hardTabReplaceExec" value="false" />
-    </conversionRule>
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%msg%n</pattern>
+            <pattern>%msg1%n</pattern>
         </encoder>
     </appender>
 
