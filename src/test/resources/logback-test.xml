@@ -1,0 +1,15 @@
+<configuration>
+    <property scope="context" name="newLineReplaced" value="/*[NL]*/" />
+    <property scope="context" name="hardTabReplaceExec" value="false" />
+    <conversionRule conversionWord="msg1C" converterClass="com.github.roundrop.logging.logback.customizable.MessageConverter" />
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%msg1C</pattern>
+        </encoder>
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>

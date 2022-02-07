@@ -62,7 +62,7 @@ tasks.withType(Test) {
 test {
   useJUnitPlatform()
   filter {
-     //all classes in package, recursively
-     includeTestsMatching "com.github.roundrop.logging.logback.*Test"
-   }
+    //all classes in package, recursively
+    includeTestsMatching "com.github.roundrop.logging.logback.*Test"
+  }
 }

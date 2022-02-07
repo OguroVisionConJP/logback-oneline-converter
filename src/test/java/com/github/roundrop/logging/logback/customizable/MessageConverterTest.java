@@ -3,26 +3,16 @@ package com.github.roundrop.logging.logback.customizable;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
-import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.LoggingEvent;
-import ch.qos.logback.classic.spi.TurboFilterList;
-import ch.qos.logback.classic.util.ContextInitializer;
-import ch.qos.logback.core.Appender;
 import ch.qos.logback.core.ConsoleAppender;
 import ch.qos.logback.core.CoreConstants;
-import ch.qos.logback.core.joran.spi.JoranException;
-import ch.qos.logback.core.read.ListAppender;
-import ch.qos.logback.core.spi.AppenderAttachable;
 
 import org.junit.jupiter.api.Test;
 import org.slf4j.LoggerFactory;
 
-import static java.util.Objects.requireNonNull;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -99,43 +89,4 @@ public class MessageConverterTest {
                         "    xxx_id");
     }
 
-    /*
-     * @Test
-     * public void testSimple() throws JoranException {
-     * LoggerContext loggerFactory =
-     * createLoggerFactory("/logback-newline-test.xml");
-     * ListAppender<ILoggingEvent> listAppender = (ListAppender<ILoggingEvent>)
-     * requireNonNull(
-     * loggerFactory.getLoggerList().get(0).getAppender("LIST"));
-     * listAppender.setContext(loggerFactory);
-     * listAppender.start();
-     * 
-     * // Write something that never gets logged explicitly...
-     * Logger debugLogger = loggerFactory.getLogger("com.example.Debug");
-     * debugLogger.addAppender(listAppender);
-     * debugLogger.debug("debug one \r");
-     * debugLogger.debug("debug two \n");
-     * debugLogger.debug("debug three \r\n");
-     * debugLogger.debug("debug four \n\r");
-     * 
-     * Logger logger = loggerFactory.getLogger("com.example.Test");
-     * logger.addAppender(listAppender);
-     * logger.error("\tWrite out error message to console");
-     * 
-     * System.out.println(listAppender.list.get(0));
-     * assertThat(listAppender.list.size(), is(5));
-     * assertThat(listAppender.list.get(0), is("[DEBUG] debug one  ~~ "));
-     * }
-     * 
-     * LoggerContext createLoggerFactory(String resourceName) throws JoranException
-     * {
-     * LoggerContext context = new LoggerContext();
-     * context.reset();
-     * URL resource = getClass().getResource(resourceName);
-     * JoranConfigurator configurator = new JoranConfigurator();
-     * configurator.setContext(context);
-     * configurator.doConfigure(resource);
-     * return context;
-     * }
-     */
 }
