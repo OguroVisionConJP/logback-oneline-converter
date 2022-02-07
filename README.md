@@ -33,6 +33,8 @@ Declare the new conversion word in your configuration file like as `logback.xml`
 
 Example - Declare `msg1L`, `ex1L`, `xEx1L` as shown below:
 
+backport...
+
 ```xml
 <configuration>
   <conversionRule conversionWord="msg1L" converterClass="com.github.roundrop.logging.logback.OnelineMessageConverter" />
@@ -42,6 +44,27 @@ Example - Declare `msg1L`, `ex1L`, `xEx1L` as shown below:
   <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <encoder>
       <pattern>%d{yyyy/MM/dd HH:mm:ss:SSS}\t%-5level\t%msg1L\t%xEx1L%n</pattern>
+                                                      ^^^^^^  ^^^^^^
+    </encoder>
+    :
+  </appender>
+```
+
+version 2.0... (Java11 / Gradle7 ready )
+
+```xml
+<configuration>
+  <property scope="context" name="newLineReplaced" value="/*[NL]*/" />
+  <property scope="context" name="hardTabReplaced" value="/*[HT]*/" />
+  <property scope="context" name="hardTabReplaceExec" value="false" />
+  <property scope="context" name="newLineReplaceExec" value="true" />
+  <conversionRule conversionWord="msg1C" converterClass="com.github.roundrop.logging.logback.customizable.MessageConverter" />
+  <conversionRule conversionWord="ex1C" converterClass="com.github.roundrop.logging.logback.customizable.ThrowableProxyConverter" />
+  <conversionRule conversionWord="xEx1C" converterClass="com.github.roundrop.logging.logback.customizable.ExtendedThrowableProxyConverter" />
+
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <encoder>
+      <pattern>%d{yyyy/MM/dd HH:mm:ss:SSS}\t%-5level\t%msg1C\t%xEx1C%n</pattern>
                                                       ^^^^^^  ^^^^^^
     </encoder>
     :
